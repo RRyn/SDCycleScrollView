@@ -144,6 +144,7 @@ typedef enum {
 
 /** 占位图，用于网络未加载到图片时 */
 @property (nonatomic, strong) UIImage *placeholderImage;
+@property (nonatomic, strong) NSArray *placeholderImages;
 
 /** 是否显示分页控件 */
 @property (nonatomic, assign) BOOL showPageControl;

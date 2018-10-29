@@ -179,6 +179,19 @@ NSString * const ID = @"SDCycleScrollViewCell";
     self.backgroundImageView.image = placeholderImage;
 }
 
+- (void)setPlaceholderImages:(NSArray *)placeholderImages {
+    _placeholderImages = placeholderImages;
+    if (placeholderImages && placeholderImages.count) {
+        if (!self.backgroundImageView) {
+            UIImageView *bgImageView = [UIImageView new];
+            bgImageView.contentMode = UIViewContentModeScaleAspectFit;
+            [self insertSubview:bgImageView belowSubview:self.mainView];
+            self.backgroundImageView = bgImageView;
+        }
+        self.backgroundImageView.image = placeholderImages.firstObject;
+    }
+}
+
 - (void)setPageControlDotSize:(CGSize)pageControlDotSize
 {
     _pageControlDotSize = pageControlDotSize;
@@ -588,7 +601,12 @@ NSString * const ID = @"SDCycleScrollViewCell";
     if (!self.onlyDisplayText && [imagePath isKindOfClass:[NSString class]]) {
         
         if ([imagePath hasPrefix:@"http"]) {
-            [cell.imageView setImageWithURL:[NSURL URLWithString:imagePath] placeholder:self.placeholderImage];
+            if (self.placeholderImages && self.placeholderImages.count) {
+                [cell.imageView setImageWithURL:[NSURL URLWithString:imagePath] placeholder:self.placeholderImages[itemIndex]];
+            } else {
+                [cell.imageView setImageWithURL:[NSURL URLWithString:imagePath] placeholder:self.placeholderImage];
+            }
+            
         } else {
             UIImage *image = [UIImage imageNamed:imagePath];
             if (!image) {
