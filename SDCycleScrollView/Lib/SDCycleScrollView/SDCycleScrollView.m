@@ -601,10 +601,11 @@ NSString * const ID = @"SDCycleScrollViewCell";
     if (!self.onlyDisplayText && [imagePath isKindOfClass:[NSString class]]) {
         
         if ([imagePath hasPrefix:@"http"]) {
+            YYWebImageOptions option = _isNeedFade ? YYWebImageOptionSetImageWithFadeAnimation : kNilOptions;
             if (self.placeholderImages && self.placeholderImages.count) {
-                [cell.imageView setImageWithURL:[NSURL URLWithString:imagePath] placeholder:self.placeholderImages[itemIndex]];
+                [cell.imageView setImageWithURL:[NSURL URLWithString:imagePath] placeholder:self.placeholderImages[itemIndex] options:option completion:nil];
             } else {
-                [cell.imageView setImageWithURL:[NSURL URLWithString:imagePath] placeholder:self.placeholderImage];
+                [cell.imageView setImageWithURL:[NSURL URLWithString:imagePath] placeholder:self.placeholderImage  options:option completion:nil];
             }
             
         } else {
